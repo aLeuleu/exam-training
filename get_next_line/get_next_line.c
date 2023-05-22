@@ -4,7 +4,7 @@
 #include <stdlib.h>
 
 #ifndef BUFFER_SIZE
-#define BUFFER_SIZE 10000000
+#define BUFFER_SIZE 10
 #endif
 
 int	ft_strchr(char *str, char c){
@@ -33,11 +33,9 @@ char *ft_strjoin(char *s1, char *s2){
 		s1[0] = 0;
 	}
 	char *res = malloc(ft_strlen(s1) + ft_strlen(s2) + 1);
-	int i = 0;
-	while (s1[i]){
+	int i = -1;
+	while (s1[++i])
 		res[i] = s1[i];
-		i++;
-	}
 	int j = 0;
 	while (s2[j])
 		res[i++] = s2[j++];
@@ -60,47 +58,44 @@ char    *read_untill_nl_or_nb(int fd, char *str){
 	return (str);
 }
 
-char	*get_first_line(char *str){
+char	*get_first_line(char *str)
+{
 
 	int i = 0;
-	if (!str || !str[i])
+	if (!str[i])
 		return (NULL);
 	while (str[i] && str[i] != '\n')
 		i++;
 
-	char * res = malloc(i +2);
+	char *res = (char *)malloc(sizeof(char) * (i + 2));
+
 	int j = -1;
-	while (j <= i){
-		res[i] = str[i];
-		i++;
-	}
-
-	if (str[i] == '\n')
-		res[j++] = str[i];
-
+	while (++j <= i)
+		res[j] = str[j];
+	if (str[j] == '\n')
+		res[j++] ='\n';
 	res[j] = 0;
-	return res;
+	return (res);
 }
 
-char	*trim_first_line(char *str){
+char	*trim_first_line(char *str)
+{
+	int		i = 0;
 
 	if (!str)
 		return (NULL);
-
-	int i = 0;
 	while (str[i] && str[i] != '\n')
-		i ++;
-	if (!str)
-		return (free(str), NULL);
-	char * res = malloc (ft_strlen(str) - i +1);
-	i ++;
+		i++;
+	if (!str[i])
+		return (free(str),NULL);
+	char *res = malloc((ft_strlen(str) - i + 1));
+	i++;
 	int j = 0;
 	while (str[i])
 		res[j++] = str[i++];
-	
 	res[j] = 0;
 	free(str);
-	return(res);
+	return (res);
 }
 
 char *get_next_line(int fd){
@@ -123,14 +118,8 @@ char *get_next_line(int fd){
 // 	char *line = get_next_line(fd);
 
 // 	while (line){
-// 		// printf("f4\n");
-
 // 		printf("%s", line);
-// 		// printf("f5\n");
-
 // 		free(line);
-// 		// printf("f6\n");
-
 // 		line = get_next_line(fd);
 // 	}
 // 	return (0);
