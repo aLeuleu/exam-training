@@ -62,21 +62,23 @@ char	*get_first_line(char *str)
 {
 
 	int i = 0;
-	if (!str[i])
+	if (!str || !str[i])
 		return (NULL);
 	while (str[i] && str[i] != '\n')
 		i++;
 
-	char *res = (char *)malloc(sizeof(char) * (i + 2));
+	char *res = (char *)malloc((i + 2));
 
 	int j = -1;
-	while (++j <= i)
+	while (++j < i)
 		res[j] = str[j];
 	if (str[j] == '\n')
 		res[j++] ='\n';
 	res[j] = 0;
 	return (res);
 }
+
+
 
 char	*trim_first_line(char *str)
 {
